@@ -1,0 +1,109 @@
+<html>
+  <body>
+    <div id="screen"></div>
+    <div>
+      <button style="margin-bottom:10px; width:100%" onclick="moveUp()">UP</button>
+    </div>        
+    <div>        
+      <button style="margin-bottom:10px; width:100%" onclick="moveDown()">DOWN</button>
+    </div>
+    <div>
+      <button style="margin-bottom:10px; width:100%" onclick="moveLeft()">LEFT</button>
+    </div>
+    <div>        
+      <button style="margin-bottom:10px; width:100%" onclick="moveRight()">RIGHT</button>
+    </div>
+    <div>        
+      <button style="width:100%" onclick="pauseBallFn()"><div id="pauseText"></div></button>
+    </div>    
+    <div class="float" id="float"></div>
+    <div class="timer" id="timer"></div>
+  </div>
+  </body>
+  <script>
+    var topPosition = 0;
+    var leftPosition = 0;
+
+    var ballDown = true;
+    var ballRight = true;
+
+    var pauseBall = false;
+    var pauseBallText = document.getElementById("pauseText").innerHTML = "PAUSE";
+
+    var speed = 1;
+
+    document.getElementById("float").style.top = topPosition +"px";
+    document.getElementById("float").style.left = leftPosition +"px";
+
+    function moveDown(){
+      if(topPosition < 540){
+        topPosition = topPosition + speed;
+        document.getElementById("float").style.top = topPosition +"px";
+      }
+      if(topPosition === 540){
+        ballDown = false;
+      }
+    }
+    function moveUp(){
+      if(topPosition > 0){
+        topPosition = topPosition - speed;
+        document.getElementById("float").style.top = topPosition +"px";
+      }
+      if(topPosition === 0){
+        ballDown = true;
+      }
+    }
+
+    function moveLeft(){
+      if(leftPosition > 0 ){
+        leftPosition = leftPosition - speed;
+        document.getElementById("float").style.left = leftPosition +"px";
+      }
+      if(leftPosition === 0){
+        ballRight = true;
+      }
+    }
+    function moveRight(){
+      if(leftPosition < 1264){
+        leftPosition = leftPosition + speed;
+        document.getElementById("float").style.left = leftPosition +"px";
+      }
+      if(leftPosition === 1264){
+        ballRight = false;
+      }
+    }
+
+    function pauseBallFn(){
+      pauseBall = !pauseBall;
+      if(pauseBall){
+        document.getElementById("pauseText").innerHTML = "PLAY";
+      }
+       else {
+        document.getElementById("pauseText").innerHTML = 'PAUSE';
+      }
+    }
+    setInterval(() => {
+      if(!pauseBall){
+        if(ballDown) moveDown();
+        if(!ballDown) moveUp();
+        if(ballRight) moveRight();
+        if(!ballRight) moveLeft();
+      }
+    }, 1);
+    
+
+  </script>
+  <style>
+    .float{
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      height: 100px;
+      width: 100px;
+      color: white;
+      border: 1px solid black;
+      background: rebeccapurple;
+      border-radius: 50%;
+    }
+  </style>
+</html>
